@@ -86,7 +86,13 @@ contract Vote {
         optC = 0;
         voteCount = 0;
 
-        
+        //Reset Current poll data
+        description = '';
+        labelA = '';
+        labelB = '';
+        labelC = '';
+
+
 
         // Reset the hasVoted mapping for every voter in our array
         for (uint i = 0; i < voters.length; i++) {
