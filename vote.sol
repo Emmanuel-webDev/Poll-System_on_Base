@@ -10,7 +10,7 @@ contract Vote {
     uint public optB;
     uint public optC;
     uint256 public voteCount = 0;
-    address private owner;
+    address public  owner;
 
     enum Options {
         A,
