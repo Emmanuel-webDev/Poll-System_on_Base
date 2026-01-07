@@ -10,7 +10,7 @@ contract Vote {
     uint public optB;
     uint public optC;
     uint256 public voteCount = 0;
-    address public  owner;
+    address public owner;
 
     enum Options {
         A,
@@ -24,19 +24,18 @@ contract Vote {
     event OwnerSet(address indexed oldOwner, address indexed newOwner);
     event votedAlready(address, Options);
 
-     modifier isOwner() {
+    modifier isOwner() {
         require(msg.sender == owner, "Caller is not owner");
         _;
     }
 
-     /**
+    /**
      * @dev Set contract deployer as owner
      */
     constructor() {
         owner = msg.sender; // 'msg.sender' is sender of current call, contract deployer for a constructor
         emit OwnerSet(address(0), owner);
     }
-
 
     function cast(uint x) public {
         require(x <= uint(Options.C), "Invalid Option");
@@ -53,27 +52,25 @@ contract Vote {
         } else if (choice == Options.B) {
             optB++;
         } else if (choice == Options.C) {
-            optB++;
+            optC++;
         }
 
         emit votedAlready(msg.sender, Options(x));
     }
 
-    function reset () public isOwner{
+    function reset() public isOwner {
         // Reset integers
-    optA = 0;
-    optB = 0;
-    optC = 0;
-    voteCount = 0;
+        optA = 0;
+        optB = 0;
+        optC = 0;
+        voteCount = 0;
 
-    // Reset the hasVoted mapping for every voter in our array
-    for (uint i = 0; i < voters.length; i++) {
-        hasVoted[voters[i]] = false;
+        // Reset the hasVoted mapping for every voter in our array
+        for (uint i = 0; i < voters.length; i++) {
+            hasVoted[voters[i]] = false;
+        }
+
+        // Clear the voters array
+        delete voters;
     }
-
-    // Clear the voters array
-    delete voters;
-    }
-
-    
 }
