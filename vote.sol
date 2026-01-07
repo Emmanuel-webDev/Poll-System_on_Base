@@ -10,6 +10,10 @@ contract Vote {
     uint public optB;
     uint public optC;
     uint256 public voteCount = 0;
+    string public description;
+    string public labelA;
+    string public labelB;
+    string public labelC;
     address public owner;
 
     enum Options {
@@ -35,6 +39,23 @@ contract Vote {
     constructor() {
         owner = msg.sender; // 'msg.sender' is sender of current call, contract deployer for a constructor
         emit OwnerSet(address(0), owner);
+    }
+
+    function createPoll(
+        string memory _question,
+        string memory _a,
+        string memory _b,
+        string memory _c
+    ) public {
+        description = _question;
+        labelA = _a;
+        labelB = _b;
+        labelC = _c;
+
+        optA = 0;
+        optB = 0;
+        optC = 0;
+        voteCount = 0;
     }
 
     function cast(uint x) public {
@@ -64,6 +85,8 @@ contract Vote {
         optB = 0;
         optC = 0;
         voteCount = 0;
+
+        
 
         // Reset the hasVoted mapping for every voter in our array
         for (uint i = 0; i < voters.length; i++) {
