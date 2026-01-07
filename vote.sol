@@ -59,5 +59,21 @@ contract Vote {
         emit votedAlready(msg.sender, Options(x));
     }
 
+    function reset () public isOwner{
+        // Reset integers
+    optA = 0;
+    optB = 0;
+    optC = 0;
+    voteCount = 0;
+
+    // Reset the hasVoted mapping for every voter in our array
+    for (uint i = 0; i < voters.length; i++) {
+        hasVoted[voters[i]] = false;
+    }
+
+    // Clear the voters array
+    delete voters;
+    }
+
     
 }
