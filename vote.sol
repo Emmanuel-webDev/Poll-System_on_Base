@@ -10,6 +10,7 @@ contract Vote {
     uint public optB;
     uint public optC;
     uint256 public voteCount = 0;
+    uint public pollEndTime;
     string public description;
     string public labelA;
     string public labelB;
@@ -56,6 +57,7 @@ contract Vote {
         optB = 0;
         optC = 0;
         voteCount = 0;
+        pollEndTime = block.timestamp + 3 days;
     }
 
     function cast(uint x) public {
@@ -80,6 +82,7 @@ contract Vote {
     }
 
     function reset() public isOwner {
+        require(block.timestamp >= pollEndTime, "Poll is still active!!!");
         // Reset integers
         optA = 0;
         optB = 0;
@@ -102,4 +105,6 @@ contract Vote {
         // Clear the voters array
         delete voters;
     }
+
+
 }
